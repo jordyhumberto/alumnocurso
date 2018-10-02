@@ -7,7 +7,7 @@ if(!isset($_SESSION["id_usuario"])){
 $IDMatricula=$_GET['IDMatricula'];
 $IDCarrera=$_GET['IDCarrera'];
 $Nombre=$_GET['Nombre'];
-$sqlM="SELECT co.IDCO AS ca,co.IDCursos AS idc,c.Descripcion AS curso,s.Descripcion AS semestre,concat(d.Nombres,' ',d.Apellidos) AS docente,c.IDCiclo as ciclo FROM (((Tbl_curso_operativo AS co INNER JOIN Tbl_cursos AS c on co.IDCursos=c.IDCursos)INNER JOIN Tbl_semestre AS s ON co.IDSemestre=s.IDSemestre)INNER JOIN Tbl_docente AS d ON co.IDDocente=d.IDDocente) WHERE (co.IDSemestre=79 OR co.IDSemestre=80) AND c.IDCursos LIKE '$IDCarrera%'";
+$sqlM="SELECT co.IDCO AS ca,co.IDCursos AS idc,c.Descripcion AS curso,s.Descripcion AS semestre,concat(d.Nombres,' ',d.Apellidos) AS docente,c.IDCiclo AS ciclo,c.Creditos AS creditos FROM (((Tbl_curso_operativo AS co INNER JOIN Tbl_cursos AS c on co.IDCursos=c.IDCursos)INNER JOIN Tbl_semestre AS s ON co.IDSemestre=s.IDSemestre)INNER JOIN Tbl_docente AS d ON co.IDDocente=d.IDDocente) WHERE (co.IDSemestre=79 OR co.IDSemestre=80) AND c.IDCursos LIKE '$IDCarrera%'";
 $resultadoM=$mysqli->query($sqlM) or trigger_error($mysqli->error);
 $sqlC="SELECT co.IDCO AS op,c.Descripcion AS curso,s.Descripcion AS semestre FROM ((((Tbl_cursos_alumno AS ca INNER JOIN Tbl_curso_operativo AS co ON ca.IDCO=co.IDCO)INNER JOIN Tbl_cursos AS c ON c.IDCursos=co.IDCursos)INNER JOIN Tbl_docente AS d ON co.IDDocente=d.IDDocente)INNER JOIN Tbl_semestre AS s ON co.IDSemestre=s.IDSemestre) WHERE ca.IDMatricula='$IDMatricula'";
 $resultadoC=$mysqli->query($sqlC) or trigger_error($mysqli->error);

@@ -10,7 +10,11 @@
     $id=$_POST['check'];
     $N=count($id);
     for($i=0; $i < $N; $i++){
-        $sqlCA="INSERT INTO Tbl_cursos_alumno(IDMatricula,IDCO,Estado) VALUES ('$IDMatricula','$id[$i]','01')";
+        $sqlC="SELECT c.Creditos AS creditos FROM Tbl_cursos AS c INNER JOIN Tbl_curso_operativo AS co ON c.IDCursos=co.IDCursos WHERE co.IDCO='$id[$i]'";
+        $resultadoC=$mysqli->query($sqlC);
+        $rowC=$resultadoC->fetch_array(MYSQLI_ASSOC);
+        $creditos=$rowC['creditos'];
+        $sqlCA="INSERT INTO Tbl_cursos_alumno VALUES ('$IDMatricula','$id[$i]','$creditos','01')";
         $resultadoCA=$mysqli->query($sqlCA);
         $sqlNA="INSERT INTO Tbl_notas_alumno(IDMatricula,IDCO,Estado) VALUES ('$IDMatricula','$id[$i]','02')";
         $resultadoNA=$mysqli->query($sqlNA);
